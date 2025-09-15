@@ -1,0 +1,41 @@
+<div class="landing">
+  <!-- Hero -->
+  <section class="hero">
+    <h1>{{ appName }}</h1>
+    <p>{{ tagline }}</p>
+    <div class="actions">
+      <a routerLink="/login" class="btn primary">Login</a>
+      <a routerLink="/signup" class="btn secondary">Sign Up</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card" *ngFor="let f of features">
+        <i class="fa-solid {{ f.icon }}"></i>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step" *ngFor="let s of steps">
+        <div class="step-num">{{ s.num }}</div>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Get Started?</h2>
+    <a routerLink="/signup" class="btn primary">Create Account</a>
+  </section>
+</div>

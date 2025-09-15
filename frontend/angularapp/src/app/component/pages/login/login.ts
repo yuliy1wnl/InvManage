@@ -1,0 +1,39 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.html',
+  styleUrl: './login.css',
+  standalone: true,
+  imports: [CommonModule, FormsModule]
+})
+export class LoginComponent {
+  username = '';
+  password = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+onLogin() {
+  this.authService.login(this.username, this.password).subscribe({
+    next: (res: any) => {
+      if (res.role !== 'USER') {
+        alert('Access denied! Not a user.');
+        return;
+      }
+      this.authService.setToken(res.token, res.role);
+      this.router.navigate(['/user/dashboard']);
+    },
+    error: () => alert('Invalid username or password')
+  });
+}
+  goToSignup() {
+    this.router.navigate(['/signup']);
+  }
+    goToHome() {
+    this.router.navigate(['/']);
+  }
+}

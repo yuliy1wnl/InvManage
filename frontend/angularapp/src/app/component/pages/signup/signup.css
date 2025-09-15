@@ -1,0 +1,129 @@
+.btn-back {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  display: inline-block;
+  transition: color 0.3s;
+}
+
+.btn-back:hover {
+  color: #357ab7;
+  text-decoration: underline;
+}
+
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  font-family: 'Arial', sans-serif;
+  overflow: hidden;
+}
+
+.signup-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 450px; /* limit card width */
+  text-align: center;
+  overflow: hidden; /* allow scrolling if content exceeds height */
+  box-sizing: border-box;
+  
+
+}
+
+h2 {
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.subheading {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.input-group {
+  margin-bottom: .75rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.role-selection {
+  display: flex;
+  justify-content: center;
+  gap: .8rem;
+  margin-bottom: 1rem;
+}
+
+.role-selection label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.terms {
+  display: flex;
+  align-items: center; /* vertically center the checkbox and label */
+  justify-content: flex-start; /* optional, keep it left-aligned */
+  gap: 0.4rem; /* space between checkbox and text */
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.terms input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0; /* remove default spacing */
+  vertical-align: middle;
+}
+
+.terms label {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.btn-signup {
+  width: 100%;
+  padding: 0.65rem;
+  background: #4e54c8;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-signup:hover {
+  background: #3b40a4;
+}
+
+.login-text {
+  margin-top: .75rem;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.login-link {
+  color: #4e54c8;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,125 @@
+<div class="employee-dashboard">
+  <h2 class="title">Inventory Dashboard</h2>
+
+  <!-- Stat Cards -->
+  <div class="dashboard-cards">
+    <div class="card">
+      <h3>Total Items in Stock</h3>
+      <p>{{ totalStockItems }}</p>
+    </div>
+    <div class="card">
+      <h3>Low Stock Items</h3>
+      <p>{{ lowStockItems }}</p>
+    </div>
+    <div class="card">
+      <h3>Pending Restocks</h3>
+      <p>{{ pendingRestocks }}</p>
+    </div>
+    <div class="card">
+      <h3>Damaged / Returned</h3>
+      <p>{{ damagedItems }}</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="dashboard-charts">
+    <div class="chart-card">
+      <h3>Stock Levels by Category</h3>
+      <div class="pie-chart-wrapper">
+        <canvas baseChart
+          [data]="stockCategoryChartData"
+          [options]="chartOptions"
+          [type]="'pie'">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Sales Trend</h3>
+      <div class="line-chart-wrapper">
+        <canvas baseChart
+          [data]="salesTrendChartData"
+          [options]="chartOptions"
+          [type]="'line'">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Top Selling Products</h3>
+      <div class="bar-chart-wrapper">
+        <canvas baseChart
+          [data]="topProductsChartData"
+          [options]="chartOptions"
+          [type]="'bar'">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inventory Overview Table -->
+  <div class="card table-card">
+    <h3>Inventory Overview</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Category</th>
+          <th>Stock</th>
+          <th>Min Stock</th>
+          <th>Price (₹)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of inventoryItems">
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.stock }}</td>
+          <td>{{ item.minStock }}</td>
+          <td>{{ item.price | currency:'INR' }}</td>
+          <td>
+            <button (click)="updateStock(item)">Update Stock</button>
+            <button (click)="markDamaged(item)">Mark Damaged</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="card table-card">
+    <h3>Recent Transactions</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Date</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of recentTransactions">
+          <td>{{ transaction.id }}</td>
+          <td>{{ transaction.date }}</td>
+          <td>{{ transaction.itemName }}</td>
+          <td>{{ transaction.quantity }}</td>
+          <td>{{ transaction.type }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notifications -->
+  <div class="card notifications">
+    <h3>Notifications</h3>
+    <ul>
+      <li *ngFor="let note of notifications">
+        <span class="dot"></span> {{ note.message }}
+      </li>
+    </ul>
+  </div>
+</div>
+  

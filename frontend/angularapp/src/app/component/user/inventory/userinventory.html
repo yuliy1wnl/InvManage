@@ -1,0 +1,84 @@
+<div class="inventory-container">
+  <h2>Computer Store Inventory</h2>
+
+  <!-- Search + Quick Filter -->
+  <div class="search-filter-bar">
+    <input
+      type="text"
+      placeholder="Search CPUs or GPUs..."
+      [(ngModel)]="searchTerm"
+      class="search-input"
+    />
+
+    <div class="quick-filters">
+      <button
+        [class.active]="selectedCategory === '' && !lowStockOnly"
+        (click)="selectedCategory = ''; lowStockOnly = false">
+        All
+      </button>
+      <button
+        [class.active]="selectedCategory === 'CPU' && !lowStockOnly"
+        (click)="selectedCategory = 'CPU'; lowStockOnly = false">
+        CPU
+      </button>
+      <button
+        [class.active]="selectedCategory === 'GPU' && !lowStockOnly"
+        (click)="selectedCategory = 'GPU'; lowStockOnly = false">
+        GPU
+      </button>
+      <button
+        [class.active]="lowStockOnly"
+        (click)="toggleLowStock()">
+        ⚠️ Low Stock
+      </button>
+    </div>
+  </div>
+
+  <!-- Inventory Grid -->
+  <div class="inventory-grid">
+    <div class="inventory-card" *ngFor="let item of filteredItems()">
+      
+      <!-- Image -->
+      <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="{{ item.name }}" class="item-image">
+
+      <!-- Card Header -->
+      <div class="card-header">
+        <h3>{{ item.name }}</h3>
+        <span class="category">{{ item.category }}</span>
+      </div>
+
+      <!-- Card Body -->
+      <div class="card-body">
+        <p>Price: ₹{{ item.unitPrice }}</p>
+        <p>
+          Quantity:
+          <span [ngClass]="{
+            'in-stock': item.quantity > 5,
+            'low-stock': item.quantity > 0 && item.quantity <= 5,
+            'out-stock': item.quantity === 0
+          }">
+            {{ item.quantity === 0 
+          ? 'Out of Stock' 
+          : item.quantity <= 5 
+            ? item.quantity + ' left (Low Stock)' 
+            : item.quantity + ' in stock' }}
+          </span>
+        </p>
+        <p>Supplier: {{ item.supplier }}</p>
+      </div>
+
+      <!-- Card Footer -->
+      <div class="card-footer">
+        <button (click)="requestItem(item)">
+          Request
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" *ngIf="toastMessage">
+    {{ toastMessage }}
+  </div>
+</div>

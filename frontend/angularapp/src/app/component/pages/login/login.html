@@ -1,0 +1,22 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <button class="btn-back" (click)="goToHome()">← Back to Home</button>
+    <h2>Welcome Back</h2>
+    <p class="subheading">Please login to your account</p>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <input type="text" placeholder="Username" [(ngModel)]="username" name="username" required>
+      </div>
+      <div class="input-group">
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+
+    <p class="register-text">
+      New user? 
+      <span class="register-link" (click)="goToSignup()">Register now</span>
+    </p>
+  </div>
+</div>

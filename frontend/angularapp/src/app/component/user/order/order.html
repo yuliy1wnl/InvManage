@@ -1,0 +1,43 @@
+<div class="my-orders">
+  <h2 class="title">My Orders</h2>
+
+  <!-- Filter Section -->
+  <div class="filter-bar">
+    <label for="status">Filter by Status: </label>
+    <select id="status" [(ngModel)]="selectedStatus">
+      <option value="">All</option>
+      <option value="Delivered">Delivered</option>
+      <option value="Pending">Pending</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+  </div>
+
+  <div class="order-list">
+  <h2>Orders</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Item</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.item }}</td>
+        <td>{{ order.status | orderStatus }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="filter">
+    <label>Filter by status:</label>
+    <select [(ngModel)]="selectedStatus">
+      <option value="">All</option>
+      <option value="PEND">Pending</option>
+      <option value="DEL">Delivered</option>
+      <option value="CANC">Cancelled</option>
+    </select>
+  </div>
+</div>

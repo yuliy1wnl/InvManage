@@ -1,0 +1,159 @@
+.user-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+/* Navbar */
+/* Navbar Container */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: #4e54c8;
+  color: white;
+  z-index: 1000;
+  flex-shrink: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Left Section */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.app-logo {
+  font-size: 1.5rem;
+}
+
+.app-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+/* Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.username {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Logout Button */
+.logout-btn {
+  background: #ef5350;
+  border: none;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #d32f2f;
+}
+/* Push layout below navbar */
+.layout {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 60px); /* full height minus navbar */
+}
+
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  background: #4e54c8;
+  color: white;
+  padding: 1rem;
+  overflow: auto;
+}
+
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.sidebar ul li a.active {
+  color: #1abc9c;
+}
+
+.logout-btn {
+  margin-top: auto;
+  padding: 5px;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logout-btn:hover {
+  background: #c0392b;
+}
+
+.user-content {
+  margin-left: 240px; /* Width of the sidebar */
+  margin-top: 20px; /* Height of the navbar */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  background: #f4f6f9;
+  width: calc(100% - 240px);
+  overflow-y: auto;
+}
+
+.footer {
+  margin-top: auto;
+  background-color: #4e54c8;
+  color: white;
+  text-align: center;
+  padding: 10px ;
+  font-size: 14px;
+}

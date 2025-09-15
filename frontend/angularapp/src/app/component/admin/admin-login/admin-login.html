@@ -1,0 +1,20 @@
+<div class="admin-login-wrapper">
+  <div class="admin-login-card">
+    <h2>Admin Login</h2>
+    <p class="subheading">Sign in to manage the system</p>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <input type="text" placeholder="Admin Username" [(ngModel)]="username" name="username" required>
+      </div>
+
+      <div class="input-group">
+        <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+
+    <button class="btn-back" (click)="goToHome()">← Back to Home</button>
+  </div>
+</div>

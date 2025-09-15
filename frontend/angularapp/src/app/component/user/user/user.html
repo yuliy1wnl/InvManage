@@ -1,0 +1,40 @@
+<div class="user-wrapper">
+ <nav class="navbar">
+  <div class="navbar-left">
+    <span class="app-logo">📦</span>
+    <span class="app-title">InvManage</span>
+  </div> 
+  <div class="navbar-right">
+    <div class="profile">
+      <img src="https://i.pravatar.cc/40" alt="User Avatar" class="avatar">
+      <span class="username">John Doe</span>
+    </div>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+  <div class="layout">
+  <aside class="sidebar">
+    <h2>User Panel</h2>
+    <nav>
+          <ul>
+            <li><a routerLink="dashboard" routerLinkActive="active">Dashboard</a></li>
+            <!--li><a routerLink="orders" routerLinkActive="active">Orders</a></li-->
+            <li><a routerLink="inventory" routerLinkActive="active">Inventory</a></li>
+            <!--li><a routerLink="place-order" routerLinkActive="active">Place Order</a></li-->
+            <li><a routerLink="reports" routerLinkActive="active">Reports</a></li>
+            <li><a routerLink="profile" routerLinkActive="active">Profile</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="user-content">
+        <router-outlet></router-outlet>
+      
+  
+      <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 InvManage | All rights reserved.</p>
+  </footer>
+    </main>
+  </div>
+</div>
