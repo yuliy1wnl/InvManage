@@ -79,8 +79,7 @@
           <td>{{ item.minStock }}</td>
           <td>{{ item.price | currency:'INR' }}</td>
           <td>
-            <button (click)="updateStock(item)">Update Stock</button>
-            <button (click)="markDamaged(item)">Mark Damaged</button>
+            <button (click)="requestItem(item)">Request Stock</button>
           </td>
         </tr>
       </tbody>

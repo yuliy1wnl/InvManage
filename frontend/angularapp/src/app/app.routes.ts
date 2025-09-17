@@ -11,8 +11,8 @@ import { AdminComponent } from './component/admin/admin/admin';
 import { AdminLoginComponent } from './component/admin/admin-login/admin-login';
 import { AdminDashboardComponent } from './component/admin/dashboard/dashboard';
 import { AdminInventoryComponent } from './component/admin/inventory/inventory';
-import { PurchaseOrders } from './component/admin/purchase-orders/purchase-orders';
-import { Suppliers } from './component/admin/suppliers/suppliers';
+import { Products } from './component/admin/products/products';
+
 import { Users } from './component/admin/users/users';
 import { Reports } from './component/admin/reports/reports';
 
@@ -54,8 +54,7 @@ export const routes: Routes = [
       children: [
         { path: 'dashboard', component: AdminDashboardComponent },
         { path: 'inventory', component: AdminInventoryComponent },
-        { path: 'purchase-orders', component: PurchaseOrders },
-        { path: 'suppliers', component: Suppliers },
+        { path: 'products', component: Products },
         { path: 'users', component: Users },
         { path: 'reports', component: Reports },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' }

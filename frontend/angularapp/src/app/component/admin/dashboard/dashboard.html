@@ -68,20 +68,17 @@
           <th>Stock</th>
           <th>Min Stock</th>
           <th>Price (₹)</th>
-          <th>Actions</th>
+        
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of inventoryItems">
           <td>{{ item.name }}</td>
           <td>{{ item.category }}</td>
-          <td>{{ item.stock }}</td>
+          <td>{{ item.quantity }}</td>
           <td>{{ item.minStock }}</td>
           <td>{{ item.price | currency:'INR' }}</td>
-          <td>
-            <button (click)="updateStock(item)">Update Stock</button>
-            <button (click)="markDamaged(item)">Mark Damaged</button>
-          </td>
+          
         </tr>
       </tbody>
     </table>

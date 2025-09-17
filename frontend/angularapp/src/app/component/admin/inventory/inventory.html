@@ -39,7 +39,7 @@
     <div class="inventory-card" *ngFor="let item of filteredItems()">
       
       <!-- Image -->
-      <img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="{{ item.name }}" class="item-image">
+      <!--img *ngIf="item.imageUrl" [src]="item.imageUrl" alt="{{ item.name }}" class="item-image"-->
 
       <!-- Card Header -->
       <div class="card-header">
@@ -69,8 +69,8 @@
 
       <!-- Card Footer -->
       <div class="card-footer">
-        <button (click)="addStock(item)">
-          Add Stock
+        <button (click)="updateStock(item)">
+          Update Stock
         </button>
       </div>
 

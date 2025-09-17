@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { DashboardService } from '../../../service/dashboard.service';
+import { HttpClient,HttpClientModule } from '@angular/common/http';
+import { AdminInventoryItem } from '../inventory/inventoryitem';
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, HttpClientModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
@@ -24,6 +27,9 @@ export class AdminDashboardComponent implements OnInit {
   recentTransactions: any[] = [];
   notifications: any[] = [];
 
+  // Toast Message
+  toastMessage: string = '';
+
   // ------------------- Chart Options -------------------
   chartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -34,7 +40,9 @@ export class AdminDashboardComponent implements OnInit {
   stockCategoryChartData: ChartConfiguration<'pie'>['data'] = { labels: [], datasets: [] };
   topProductsChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService,
+              private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     // ------------------- Fetch Summary -------------------
@@ -48,16 +56,17 @@ export class AdminDashboardComponent implements OnInit {
     // ------------------- Fetch Inventory Items -------------------
     this.dashboardService.getInventoryItems().subscribe(data => {
       this.inventoryItems = data.map((item: any) => ({
+        id: item.id,
         name: item.name,
         category: item.category,
-        stock: item.quantity,
+        quantity: item.quantity,
         minStock: item.minThreshold,
         price: item.unitPrice
       }));
 
       // Update Stock by Category Pie Chart
       const categoryMap: any = {};
-      this.inventoryItems.forEach(i => categoryMap[i.category] = (categoryMap[i.category] || 0) + i.stock);
+      this.inventoryItems.forEach(i => categoryMap[i.category] = (categoryMap[i.category] || 0) + i.quantity);
       this.stockCategoryChartData = {
         labels: Object.keys(categoryMap),
         datasets: [{ data: Object.values(categoryMap), backgroundColor: ['#42A5F5','#66BB6A','#FFA726','#AB47BC'] }]
@@ -113,12 +122,51 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  // ------------------- Action Methods -------------------
-  updateStock(item: any) {
-    alert(`Update stock for ${item.name}`);
+ // ------------------- Action Methods -------------------
+
+ // Add stock to item (updates backend)
+  addStock(item: AdminInventoryItem) {
+    const amountStr = prompt(`Enter quantity to add for ${item.name}:`);
+    const amount = Number(amountStr);
+
+    if (!isNaN(amount) && amount > 0) {
+      this.http.put(`http://localhost:8080/api/inventory/${item.id}/add-stock`, { quantity: amount })
+        .subscribe({
+          next: (updatedItem: any) => {
+            item.quantity = updatedItem.quantity; // Update UI immediately
+            this.toastMessage = `${amount} units added to ${item.name}`;
+            setTimeout(() => this.toastMessage = '', 3000);
+          },
+          error: () => {
+            this.toastMessage = 'Failed to add stock. Try again later.';
+            setTimeout(() => this.toastMessage = '', 3000);
+          }
+        });
+    } else {
+      this.toastMessage = 'Invalid quantity!';
+      setTimeout(() => this.toastMessage = '', 3000);
+    }
   }
 
-  markDamaged(item: any) {
-    alert(`Mark ${item.name} as damaged`);
+  // Mark item as damaged
+  markDamaged(item: AdminInventoryItem) {
+    this.http.put(`http://localhost:8080/api/inventory/${item.id}/mark-damaged`, {})
+      .subscribe({
+        next: () => {
+          this.toastMessage = `${item.name} marked as damaged.`;
+          setTimeout(() => this.toastMessage = '', 3000);
+        },
+        error: () => {
+          this.toastMessage = 'Failed to mark item as damaged.';
+          setTimeout(() => this.toastMessage = '', 3000);
+        }
+      });
+  }
+
+  // Display stock status with quantity
+  getStockStatus(item: AdminInventoryItem): string {
+    if (item.quantity === 0) return 'Out of Stock';
+    if (item.quantity <= 5) return `${item.quantity} left (Low Stock)`;
+    return `${item.quantity} in stock`;
   }
 }

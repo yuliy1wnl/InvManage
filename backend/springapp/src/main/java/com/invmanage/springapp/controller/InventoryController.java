@@ -43,7 +43,11 @@ public class InventoryController {
     public InventoryItem addItem(@RequestBody InventoryItem item) {
         return repository.save(item);
     }
-
+    // Bulk insert endpoint
+    @PostMapping("/bulk")
+    public List<InventoryItem> addItems(@RequestBody List<InventoryItem> items) {
+        return repository.saveAll(items);
+    }
     @PutMapping("/{id}")
     public InventoryItem updateItem(@PathVariable Long id, @RequestBody InventoryItem item) {
         item.setId(id);

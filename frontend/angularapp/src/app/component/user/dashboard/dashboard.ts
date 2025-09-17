@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { InventoryItem } from '../inventory/inventoryitem';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { DashboardService } from '../../../service/dashboard.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -34,7 +36,11 @@ export class UserDashboardComponent implements OnInit {
   stockCategoryChartData: ChartConfiguration<'pie'>['data'] = { labels: [], datasets: [] };
   topProductsChartData: ChartConfiguration<'bar'>['data'] = { labels: [], datasets: [] };
 
-  constructor(private dashboardService: DashboardService) {}
+  // Toast Message
+  toastMessage: string = '';
+  constructor(private dashboardService: DashboardService,
+  private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     // ------------------- Fetch Summary -------------------
@@ -121,4 +127,20 @@ export class UserDashboardComponent implements OnInit {
   markDamaged(item: any) {
     alert(`Mark ${item.name} as damaged`);
   }
+        // Send restock request to backend
+      requestItem(item: InventoryItem) {
+        this.http.post('http://localhost:8080/api/requests', {
+          itemId: item.id,
+          itemName: item.name
+        }).subscribe({
+          next: () => {
+            this.toastMessage = `Request sent to admin for ${item.name}`;
+            setTimeout(() => this.toastMessage = '', 3000);
+          },
+          error: () => {
+            this.toastMessage = 'Failed to send request. Try again later.';
+            setTimeout(() => this.toastMessage = '', 3000);
+          }
+        });
+      }
 }

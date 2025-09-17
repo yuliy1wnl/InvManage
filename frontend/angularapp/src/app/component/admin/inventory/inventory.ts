@@ -54,32 +54,49 @@ export class AdminInventoryComponent implements OnInit {
   }
 
   // -------------------
-  // Add stock to item (updates database)
+  // Update stock to item (updates database)
   // -------------------
-  addStock(item: AdminInventoryItem) {
-    const amountStr = prompt(`Enter quantity to add for ${item.name}:`);
-    const amount = Number(amountStr);
+updateStock(item: AdminInventoryItem) {
+  const action = prompt(`Choose action for ${item.name}: "add", "remove", "set"`)?.toLowerCase();
 
-    if (!isNaN(amount) && amount > 0) {
-      // Call backend to update stock
-      this.http.put(`http://localhost:8080/api/inventory/${item.id}/add-stock`, { quantity: amount })
-        .subscribe({
-          next: (updatedItem: any) => {
-            // Update local array to reflect changes immediately
-            item.quantity = updatedItem.quantity;
-            this.toastMessage = `${amount} units added to ${item.name}`;
-            setTimeout(() => this.toastMessage = '', 3000);
-          },
-          error: () => {
-            this.toastMessage = 'Failed to add stock. Try again later.';
-            setTimeout(() => this.toastMessage = '', 3000);
-          }
-        });
-    } else {
-      this.toastMessage = 'Invalid quantity!';
-      setTimeout(() => this.toastMessage = '', 3000);
-    }
+  if (!action || !['add', 'remove', 'set'].includes(action)) return;
+
+  const amountStr = prompt(`Enter quantity to ${action} for ${item.name}:`);
+  const amount = Number(amountStr);
+
+  if (isNaN(amount) || amount < 0) return;
+
+  let delta: number;
+
+  switch(action) {
+    case 'add':
+      delta = amount;
+      break;
+    case 'remove':
+      delta = -amount;
+      break;
+    case 'set':
+      delta = amount - item.quantity; // calculate difference to reach target
+      break;
+    default:
+      delta = 0;
   }
+
+  // Use existing backend /add-stock endpoint
+  this.http.put(`http://localhost:8080/api/inventory/${item.id}/add-stock`, { quantity: delta })
+    .subscribe({
+      next: (updatedItem: any) => {
+        item.quantity = updatedItem.quantity;
+        this.toastMessage = `Stock for ${item.name} updated to ${item.quantity}`;
+        setTimeout(() => this.toastMessage = '', 3000);
+      },
+      error: () => {
+        this.toastMessage = 'Failed to update stock.';
+        setTimeout(() => this.toastMessage = '', 3000);
+      }
+    });
+}
+
 
   // Display stock status with quantity
   getStockStatus(item: AdminInventoryItem): string {
