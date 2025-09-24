@@ -3,6 +3,7 @@ package com.invmanage.springapp.security;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.JwtException;
@@ -57,4 +58,9 @@ public class JwtUtil {
                 .getBody()
                 .get("role");
     }
+    // Validate token against user details
+    public boolean validateToken(String token, UserDetails userDetails) {
+    final String username = getUsername(token);
+    return (username.equals(userDetails.getUsername()) && validateToken(token));
+}
 }

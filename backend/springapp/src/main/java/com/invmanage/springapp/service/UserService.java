@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -16,6 +17,13 @@ public class UserService {
     private UserRepository userRepository;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        public User createUser(User user) {
+        // hash password before saving
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return userRepository.save(user);
+    }
 
     public User registerUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
@@ -38,5 +46,13 @@ public class UserService {
             return userOpt;
         }
         return Optional.empty();
+    }
+    //NEW: get all users
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    //NEW: delete user by id
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

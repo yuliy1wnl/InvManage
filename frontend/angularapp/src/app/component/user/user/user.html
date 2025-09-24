@@ -5,9 +5,9 @@
     <span class="app-title">InvManage</span>
   </div> 
   <div class="navbar-right">
-    <div class="profile">
-      <img src="https://i.pravatar.cc/40" alt="User Avatar" class="avatar">
-      <span class="username">John Doe</span>
+    <div class="profile" *ngIf="user">
+      <img [src]="user.avatarUrl" alt="User Avatar" class="avatar">
+      <span class="username">{{ user.name }}</span>
     </div>
     <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
@@ -15,13 +15,11 @@
 
   <div class="layout">
   <aside class="sidebar">
-    <h2>User Panel</h2>
+    <h2>USER Panel</h2>
     <nav>
           <ul>
             <li><a routerLink="dashboard" routerLinkActive="active">Dashboard</a></li>
-            <!--li><a routerLink="orders" routerLinkActive="active">Orders</a></li-->
             <li><a routerLink="inventory" routerLinkActive="active">Inventory</a></li>
-            <!--li><a routerLink="place-order" routerLinkActive="active">Place Order</a></li-->
             <li><a routerLink="reports" routerLinkActive="active">Reports</a></li>
             <li><a routerLink="profile" routerLinkActive="active">Profile</a></li>
           </ul>

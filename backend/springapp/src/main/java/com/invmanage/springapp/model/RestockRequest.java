@@ -1,20 +1,14 @@
 package com.invmanage.springapp.model;
 
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class RestockRequest {
 
     @Id
@@ -22,11 +16,21 @@ public class RestockRequest {
     private Long id;
 
     private Long itemId;
+    private String itemName;
     private Integer quantity;
-    private String status;   // Pending, Approved, Rejected
-    private LocalDateTime requestedAt;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PENDING; // Default
+
+    private LocalDateTime requestedAt = LocalDateTime.now();
+
+    private String requestedBy; // username or userId
 
     @ManyToOne
     @JoinColumn(name = "inventory_item_id")
     private InventoryItem inventoryItem;
+
+    public enum Status {
+        PENDING, APPROVED, REJECTED
+    }
 }

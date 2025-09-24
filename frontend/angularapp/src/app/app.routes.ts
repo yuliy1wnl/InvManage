@@ -5,16 +5,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { LandingComponent } from './component/pages/landing/landing';
 import { LoginComponent } from './component/pages/login/login';
 import { SignupComponent } from './component/pages/signup/signup';
+import { FeatureComponent } from './component/pages/features/features';
+import { OverviewComponent } from './component/pages/overview/overview';
 
 // Admin Module Components
 import { AdminComponent } from './component/admin/admin/admin';
 import { AdminLoginComponent } from './component/admin/admin-login/admin-login';
 import { AdminDashboardComponent } from './component/admin/dashboard/dashboard';
 import { AdminInventoryComponent } from './component/admin/inventory/inventory';
-import { Products } from './component/admin/products/products';
+import { ManageProductComponent } from './component/admin/products/products';
+import { AdminRequestsComponent } from './component/admin/adminrequests/adminrequests';
+import { ManageUserComponent } from './component/admin/users/users';
 
-import { Users } from './component/admin/users/users';
-import { Reports } from './component/admin/reports/reports';
 
 // User Module Components
 import { UserComponents } from './component/user/user/user';
@@ -33,6 +35,10 @@ import { UserGuard } from './component/core/guards/user-guard';
 export const routes: Routes = [
   // Landing Page
   { path: '', component: LandingComponent },
+
+  // Feature Page
+  { path: 'features', component: FeatureComponent },
+  { path: 'overview', component: OverviewComponent },
 
   // Auth Pages
   { path: 'login', component: LoginComponent },
@@ -54,9 +60,10 @@ export const routes: Routes = [
       children: [
         { path: 'dashboard', component: AdminDashboardComponent },
         { path: 'inventory', component: AdminInventoryComponent },
-        { path: 'products', component: Products },
-        { path: 'users', component: Users },
-        { path: 'reports', component: Reports },
+        { path: 'inventory/:id', component: AdminInventoryComponent },
+        { path: 'products', component: ManageProductComponent },
+        { path: 'users', component: ManageUserComponent },
+        { path: 'requests', component: AdminRequestsComponent },
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
       ]
     }

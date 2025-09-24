@@ -39,6 +39,12 @@ public class User {
     private String fullName;
 
     private String address;
+    // Add this field
+    private String avatarUrl;
+
+    // getters and setters
+    public String getAvatarUrl() { return avatarUrl; }
+    public void setAvatarUrl(String avatarUrl) { this.avatarUrl = avatarUrl; }
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

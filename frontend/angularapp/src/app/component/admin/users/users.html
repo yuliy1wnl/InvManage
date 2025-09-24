@@ -1,1 +1,52 @@
-<p>users works!</p>
+<div class="container">
+  <h2>👥 Manage Users</h2>
+
+  <!-- Add Admin Form -->
+  <div class="card form-card">
+    <h3>Create New Admin</h3>
+    <form (ngSubmit)="addAdmin()">
+      <input [(ngModel)]="newUser.username" name="username" placeholder="Username" required>
+      <input [(ngModel)]="newUser.email" name="email" placeholder="Email" type="email" required>
+      <input [(ngModel)]="newUser.password" name="password" placeholder="Password" type="password" required>
+      <input [(ngModel)]="newUser.phoneNumber" name="phoneNumber" placeholder="Phone Number">
+      <input [(ngModel)]="newUser.fullName" name="fullName" placeholder="Full Name">
+      <input [(ngModel)]="newUser.address" name="address" placeholder="Address">
+      <button type="submit">➕ Add Admin</button>
+    </form>
+  </div>
+
+  <!-- Users Table -->
+  <div class="card table-card">
+    <h3>All Users</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Full Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.fullName || '-' }}</td>
+          <td>{{ user.phoneNumber || '-' }}</td>
+          <td>{{ user.address || '-' }}</td>
+          <td>
+            <span [class.admin]="user.role === 'ADMIN'">{{ user.role }}</span>
+          </td>
+          <td>
+            <button class="delete-btn" (click)="deleteUser(user.id!)">🗑️ Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

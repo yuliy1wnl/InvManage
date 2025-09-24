@@ -1,1 +1,60 @@
-<p>products works!</p>
+<div class="product-container">
+  <h2>Manage Products</h2>
+
+  <!-- Add Product Form -->
+  <div class="add-form">
+    <input [(ngModel)]="newProduct.name" placeholder="Product Name (e.g. RTX 3080)" />
+
+    <select [(ngModel)]="newProduct.category">
+      <option value="" disabled selected>Select Category</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+      <option value="RAM">RAM</option>
+      <option value="Storage">Storage</option>
+    </select>
+
+    <textarea [(ngModel)]="newProduct.description" placeholder="Description"></textarea>
+
+    <input [(ngModel)]="newProduct.unitPrice" type="number" placeholder="Unit Price" />
+    <input [(ngModel)]="newProduct.quantity" type="number" placeholder="Quantity" />
+    <input [(ngModel)]="newProduct.minThreshold" type="number" placeholder="Min Threshold" />
+    <input [(ngModel)]="newProduct.damaged" type="number" placeholder="Damaged Units" />
+    <input [(ngModel)]="newProduct.supplier" placeholder="Supplier Name" />
+
+    <button (click)="addProduct()">➕ Add Product</button>
+  </div>
+
+  <!-- Product List -->
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Supplier</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Damaged</th>
+        <th>Min Threshold</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.supplier }}</td>
+        <td>{{ product.unitPrice | currency }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.damaged }}</td>
+        <td [ngClass]="{ 'low-stock': product.quantity <= product.minThreshold }">
+          {{ product.minThreshold }}
+        </td>
+        <td>
+          <button class="delete-btn" (click)="deleteProduct(product.id!)">🗑 Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

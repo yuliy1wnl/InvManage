@@ -1,0 +1,76 @@
+<div class="page-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a class="logo" routerLink="/">InvManage</a>
+    <ul class="menu">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/inventory">Inventory</a></li>
+      <li><a routerLink="/overview">Overview</a></li>
+      <li><a routerLink="/features">Features</a></li>
+      
+    </ul>
+    <div class="actions">
+      <button class="btn-link" (click)="goToLogin()">Sign In</button>      
+      <button class="btn-primary" (click)="goToSignup()">Try it free</button>
+    </div>
+  </nav>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Smart Inventory Management, Simplified</h1>
+    <p>
+      InvManage is a modern, enterprise-ready inventory management system
+      designed to streamline operations, reduce manual errors, and provide
+      real-time visibility into stock levels.
+    </p>
+  </section>
+
+  <!-- Highlights -->
+  <section class="highlights">
+    <div class="highlight-card">
+      <h3>End-to-End Visibility</h3>
+      <p>Track inventory across multiple locations in real time.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Seamless User Experience</h3>
+      <p>Intuitive dashboards for both users and admins.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Enterprise Architecture</h3>
+      <p>Angular frontend, Spring Boot backend, and microservices-ready.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Cloud-Native & Scalable</h3>
+      <p>Deploy with Docker and Kubernetes for high availability.</p>
+    </div>
+    <div class="highlight-card">
+      <h3>Secure by Design</h3>
+      <p>Role-based authentication and authorization for safety.</p>
+    </div>
+  </section>
+
+  <!-- Value -->
+  <section class="value">
+    <h2>Why InvManage?</h2>
+    <p>
+      With InvManage, businesses can optimize stock movement, automate
+      notifications, and reduce losses caused by overstocking or stockouts.
+      It’s not just inventory software — it’s a platform built for growth.
+    </p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to take control of your inventory?</h2>
+    <button class="btn-primary" (click)="goToSignup()">Start Now - It's Free</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 InvManage. All rights reserved.</p>
+    <ul>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Support</a></li>
+    </ul>
+  </footer>
+</div>

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminInventoryItem } from './inventoryitem';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { InventoryItem } from '../../user/inventory/inventoryitem';
+import { InventoryService } from '../../core/services/inventory.service';
 @Component({
   selector: 'app-admin-inventory',
   templateUrl: './inventory.html',
@@ -18,9 +18,9 @@ export class AdminInventoryComponent implements OnInit {
   selectedCategory: string = '';
   lowStockOnly: boolean = false;
   toastMessage: string = '';
-  items: AdminInventoryItem[] = [];
+  items: InventoryItem[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private inventoryService: InventoryService) {}
 
   ngOnInit(): void {
     this.loadInventory();
@@ -28,8 +28,7 @@ export class AdminInventoryComponent implements OnInit {
 
   // Fetch inventory from backend
   loadInventory() {
-    this.http.get<AdminInventoryItem[]>('http://localhost:8080/api/inventory')
-      .subscribe({
+    this.inventoryService.getAllItems().subscribe({
         next: (data) => this.items = data,
         error: (err) => console.error('Failed to load inventory', err)
       });
@@ -56,7 +55,7 @@ export class AdminInventoryComponent implements OnInit {
   // -------------------
   // Update stock to item (updates database)
   // -------------------
-updateStock(item: AdminInventoryItem) {
+updateStock(item: InventoryItem) {
   const action = prompt(`Choose action for ${item.name}: "add", "remove", "set"`)?.toLowerCase();
 
   if (!action || !['add', 'remove', 'set'].includes(action)) return;
@@ -82,24 +81,23 @@ updateStock(item: AdminInventoryItem) {
       delta = 0;
   }
 
-  // Use existing backend /add-stock endpoint
-  this.http.put(`http://localhost:8080/api/inventory/${item.id}/add-stock`, { quantity: delta })
-    .subscribe({
-      next: (updatedItem: any) => {
-        item.quantity = updatedItem.quantity;
-        this.toastMessage = `Stock for ${item.name} updated to ${item.quantity}`;
-        setTimeout(() => this.toastMessage = '', 3000);
-      },
-      error: () => {
-        this.toastMessage = 'Failed to update stock.';
-        setTimeout(() => this.toastMessage = '', 3000);
-      }
-    });
+  // Directly call the service here
+  this.inventoryService.updateStock(item.id, delta).subscribe({
+    next: (updatedItem) => {
+      item.quantity = updatedItem.quantity;
+      this.toastMessage = `Stock for ${item.name} updated to ${item.quantity}`;
+      setTimeout(() => (this.toastMessage = ''), 3000);
+    },
+    error: () => {
+      this.toastMessage = 'Failed to update stock.';
+      setTimeout(() => (this.toastMessage = ''), 3000);
+    }
+  });
 }
 
 
   // Display stock status with quantity
-  getStockStatus(item: AdminInventoryItem): string {
+  getStockStatus(item: InventoryItem): string {
     if (item.quantity === 0) return 'Out of Stock';
     if (item.quantity <= 5) return `${item.quantity} left (Low Stock)`;
     return `${item.quantity} in stock`;

@@ -24,6 +24,9 @@ onLogin() {
         alert('Access denied! Not a user.');
         return;
       }
+      // Save JWT in localStorage
+      localStorage.setItem('jwt_token', res.token);
+      localStorage.setItem('role', res.role);
       this.authService.setToken(res.token, res.role);
       this.router.navigate(['/user/dashboard']);
     },

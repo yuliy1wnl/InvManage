@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { InventoryService } from '../../core/services/inventory.service';
 
 @Component({
   selector: 'app-user-inventory',
@@ -20,7 +21,7 @@ export class UserInventoryComponent implements OnInit {
   toastMessage: string = '';
   items: InventoryItem[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private inventoryService: InventoryService) {}
 
   ngOnInit(): void {
     this.loadInventory();
@@ -28,11 +29,10 @@ export class UserInventoryComponent implements OnInit {
 
   // Fetch inventory from backend
   loadInventory() {
-    this.http.get<InventoryItem[]>('http://localhost:8080/api/inventory')
-      .subscribe({
-        next: (data) => this.items = data,
-        error: (err) => console.error('Failed to load inventory', err)
-      });
+    this.inventoryService.getAllItems().subscribe({
+      next: (data) => this.items = data,
+      error: (err) => console.error('Failed to load inventory', err)
+    });
   }
 
   // Toggle Low Stock filter
@@ -54,21 +54,19 @@ export class UserInventoryComponent implements OnInit {
   }
 
   // Send restock request to backend
-  requestItem(item: InventoryItem) {
-    this.http.post('http://localhost:8080/api/requests', {
-      itemId: item.id,
-      itemName: item.name
-    }).subscribe({
-      next: () => {
-        this.toastMessage = `Request sent to admin for ${item.name}`;
-        setTimeout(() => this.toastMessage = '', 3000);
-      },
-      error: () => {
-        this.toastMessage = 'Failed to send request. Try again later.';
-        setTimeout(() => this.toastMessage = '', 3000);
-      }
-    });
-  }
+requestItem(item: InventoryItem) {
+  this.inventoryService.requestRestock(item.id, 1).subscribe({
+    next: () => {
+      this.toastMessage = `Request sent to admin for ${item.name}`;
+      setTimeout(() => this.toastMessage = '', 3000);
+    },
+    error: () => {
+      this.toastMessage = 'Failed to send request. Try again later.';
+      setTimeout(() => this.toastMessage = '', 3000);
+    }
+  });
+}
+
 
   // Display stock status with quantity
   getStockStatus(item: InventoryItem): string {

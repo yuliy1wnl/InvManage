@@ -1,0 +1,98 @@
+<div class="page-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a class="logo" routerLink="/">InvManage</a>
+    <ul class="menu">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/inventory">Inventory</a></li>
+      <li><a routerLink="/overview">Overview</a></li>
+      <li><a routerLink="/features">Features</a></li>
+      
+    </ul>
+    <div class="actions">
+      <button class="btn-link" (click)="goToLogin()">Sign In</button>      
+      <button class="btn-primary" (click)="goToSignup()">Try it free</button>
+    </div>
+  </nav>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Features that Power Your Business</h1>
+    <p>
+      Everything you need to track, manage, and optimize inventory in one
+      modern platform.
+    </p>
+  </section>
+
+  <!-- Feature Grid -->
+  <section class="feature-grid">
+    <div class="feature-card">
+      <h3>User & Admin Dashboards</h3>
+      <p>
+        Personalized dashboards with real-time insights into stock levels,
+        low-stock alerts, and system activity.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Product & Category Management</h3>
+      <p>
+        Organize items into categories, update product details, and manage
+        stock with ease.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Smart Notifications</h3>
+      <p>
+        Automated alerts for low stock, new requests, or system updates —
+        sorted by priority.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Stock Transactions</h3>
+      <p>
+        Track product inflows and outflows with historical records for
+        auditing and reporting.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Role-Based Access Control</h3>
+      <p>
+        Guards for both users and admins ensure secure and restricted access.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Analytics & Reports</h3>
+      <p>
+        Generate insights with interactive charts and reports to support
+        data-driven decisions.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Scalable Deployment</h3>
+      <p>
+        Deploy with Docker & Kubernetes and rely on CI/CD pipelines for
+        smooth updates.
+      </p>
+    </div>
+    <div class="feature-card">
+      <h3>Cross-Platform Accessibility</h3>
+      <p>
+        Responsive Angular design ensures access from any device, anywhere.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Start optimizing your inventory today</h2>
+    <button class="btn-primary" (click)="goToSignup()">Start Now - It's Free</button>
+  </section>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 InvManage. All rights reserved.</p>
+    <ul>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Support</a></li>
+    </ul>
+  </footer>
+</div>

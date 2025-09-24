@@ -30,5 +30,4 @@ public class InventoryItem {
     @Builder.Default
     private Integer damaged = 0;       // damaged or returned units
     private String supplier;
-    private String imageUrl;
 }

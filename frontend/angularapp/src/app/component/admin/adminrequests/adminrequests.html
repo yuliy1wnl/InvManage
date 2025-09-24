@@ -1,0 +1,68 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">📦 Restock Notifications</h2>
+
+  <!-- Filter -->
+  <div class="mb-6">
+    <label for="statusFilter" class="mr-2 font-medium text-gray-700">Filter by status:</label>
+    <select id="statusFilter" [(ngModel)]="statusFilter" (change)="applyFilter()" class="border rounded-md px-2 py-1">
+      <option value="ALL">All</option>
+      <option value="PENDING">Pending</option>
+      <option value="APPROVED">Approved</option>
+      <option value="REJECTED">Rejected</option>
+    </select>
+  </div>
+
+  <!-- Loading & Empty State -->
+  <div *ngIf="loading" class="text-gray-500">Loading requests...</div>
+  <div *ngIf="!loading && filteredRequests.length === 0" class="text-gray-500">
+    No restock requests right now 🎉
+  </div>
+
+  <!-- Notifications -->
+  <div class="space-y-4">
+    <div *ngFor="let req of filteredRequests"
+         class="notification-card animate-fade-in flex items-start justify-between bg-white shadow-md rounded-xl p-5 border-l-4 transition hover:shadow-lg">
+      
+      <!-- Left Section -->
+      <div class="flex items-start gap-3">
+        <div class="icon-wrapper flex items-center justify-center w-10 h-10 rounded-full text-lg font-bold"
+             [ngClass]="{
+                'bg-yellow-100 text-yellow-600': req.status === 'PENDING',
+                'bg-green-100 text-green-600': req.status === 'APPROVED',
+                'bg-red-100 text-red-600': req.status === 'REJECTED'
+             }">
+          <i class="fas fa-box"></i>
+        </div>
+
+        <div>
+          <p class="text-gray-800 font-semibold">
+            Restock request for <span class="text-blue-600">{{ req.itemName || ('Item #' + req.itemId) }}</span>
+          </p>
+          <p class="text-sm text-gray-600 mt-1">
+            Quantity requested: <span class="font-medium">{{ req.quantity }}</span>
+          </p>
+          <p class="text-xs text-gray-400 mt-1">
+            Requested at: {{ req.requestedAt | date:'short' }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex items-center gap-3">
+        <span class="status-badge px-3 py-1 rounded-full text-xs font-semibold"
+              [ngClass]="{
+                'bg-yellow-100 text-yellow-700': req.status === 'PENDING',
+                'bg-green-100 text-green-700': req.status === 'APPROVED',
+                'bg-red-100 text-red-700': req.status === 'REJECTED'
+              }">
+          {{ req.status }}
+        </span>
+
+        <button (click)="goToInventory(req.itemId)"
+                class="view-btn bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg shadow-sm transition">
+          View Item
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

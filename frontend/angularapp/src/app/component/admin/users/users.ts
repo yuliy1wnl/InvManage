@@ -1,23 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 interface User {
-  id: number;
+  id?: number;
   username: string;
-  role: string;
+  password?: string;  // required only when creating
   email: string;
+  phoneNumber?: string;
+  fullName?: string;
+  address?: string;
+  role: string; // "USER" | "ADMIN"
 }
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.html',
-  styleUrls: ['./users.css'],
+  selector: 'app-manage-user',
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, FormsModule],
+  templateUrl: './users.html',
+  styleUrls: ['./users.css']
 })
-export class Users {
-  users: User[] = [
-    { id: 1, username: 'admin1', role: 'ADMIN', email: 'admin1@gmail.com' },
-    { id: 2, username: 'user1', role: 'USER', email: 'user1@gmail.com' }
-  ];
+export class ManageUserComponent implements OnInit {
+  users: User[] = [];
+
+  newUser: User = {
+    username: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    fullName: '',
+    address: '',
+    role: 'ADMIN'
+  };
+
+  apiUrl = 'http://localhost:8080/api/admin/users'; // adjust based on backend mapping
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  // Fetch all users
+  loadUsers() {
+    this.http.get<User[]>(this.apiUrl).subscribe(data => {
+      this.users = data;
+    });
+  }
+
+  // Add new Admin user
+  addAdmin() {
+    if (!this.newUser.username || !this.newUser.email || !this.newUser.password) {
+      alert("⚠️ Please fill in username, email, and password.");
+      return;
+    }
+
+    this.newUser.role = 'ADMIN'; // force role as admin
+
+    this.http.post<User>(this.apiUrl, this.newUser).subscribe(() => {
+      this.newUser = {
+        username: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        fullName: '',
+        address: '',
+        role: 'ADMIN'
+      };
+      this.loadUsers();
+    });
+  }
+
+  // Delete user with confirmation
+  deleteUser(id: number) {
+    const confirmDelete = window.confirm("⚠️ Are you sure you want to delete this user?");
+    if (confirmDelete) {
+      this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
+        this.loadUsers();
+      });
+    }
+  }
 }

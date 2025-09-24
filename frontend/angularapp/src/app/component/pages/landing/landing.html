@@ -1,16 +1,16 @@
 <div class="page-container">
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="logo">InvManage</div>
+    <div class="logo" routerLink="/">InvManage</div>
     <ul class="menu">
-      <li><a href="#">Inventory</a></li>
-      <li><a href="#">Overview</a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="#">Hardware</a></li>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/inventory">Inventory</a></li>
+      <li><a routerLink="/overview">Overview</a></li>
+      <li><a routerLink="/features">Features</a></li>
+      
     </ul>
     <div class="actions">
-      <button class="btn-link" (click)="goToLogin()">Sign In</button>
-      
+      <button class="btn-link" (click)="goToLogin()">Sign In</button>      
       <button class="btn-primary" (click)="goToSignup()">Try it free</button>
     </div>
   </nav>
@@ -20,22 +20,21 @@
     <h1>
       Finally, a <span class="highlight">modern</span> inventory system
     </h1>
-    <p>
+    <p class="subtitle">
       Reduce stockouts, speed up operations, optimize routes and get real-time
       visibility with InvManage’s warehouse management app.
     </p>
 
-    <div class="hero-buttons">
+    <div class="cta-buttons">
       <button class="btn-primary" (click)="goToSignup()">Start now - It's free</button>
       
     </div>
-    <small>Free, forever, with unlimited users.</small>
+    <p class="note">Free, forever, with unlimited users.</p>
   </section>
-
-  <!-- Screenshot Preview -->
+  <!-- Screenshot Preview >
   <section class="preview">
     <img src="assets/dashboardss.png" alt="Dashboard Preview" />
-  </section>
+  </section-->
 
   <!-- Key Features -->
   <section class="features">

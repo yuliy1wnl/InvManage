@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.invmanage.springapp.model.InventoryItem;
 import com.invmanage.springapp.model.InventoryTransaction;
 import com.invmanage.springapp.model.Notification;
+import com.invmanage.springapp.model.RestockRequest;
 import com.invmanage.springapp.repository.InventoryItemRepository;
 import com.invmanage.springapp.repository.InventoryTransactionRepository;
 import com.invmanage.springapp.repository.NotificationRepository;
@@ -54,10 +55,11 @@ public class DashboardService {
     }
 
     public long getPendingRestocks() {
-        return restockRepo.findAll().stream()
-                .filter(r -> r.getStatus() != null && r.getStatus().equalsIgnoreCase("Pending"))
-                .count();
-    }
+    return restockRepo.findAll().stream()
+            .filter(r -> RestockRequest.Status.PENDING.equals(r.getStatus()))
+            .count();
+}
+
 
     // -------------------- Full Data Lists --------------------
     public List<InventoryItem> getAllItems() {

@@ -24,13 +24,15 @@ onLogin() {
         alert('Access denied! Not an admin.');
         return;
       }
+      // Save JWT in localStorage
+      localStorage.setItem('jwt_token', res.token);
+      localStorage.setItem('role', res.role);
       this.authService.setToken(res.token, res.role);
       this.router.navigate(['/admin/dashboard']);
     },
     error: () => alert('Invalid username or password')
   });
 }
-
   goToHome() {
     this.router.navigate(['/']);
   }

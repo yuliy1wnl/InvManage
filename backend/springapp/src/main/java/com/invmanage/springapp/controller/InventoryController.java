@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.invmanage.springapp.model.InventoryItem;
+import com.invmanage.springapp.model.RestockRequest;
 import com.invmanage.springapp.repository.InventoryItemRepository;
+import com.invmanage.springapp.repository.RestockRequestRepository;
 
 @RestController
 @RequestMapping("/api/inventory")
@@ -24,10 +26,14 @@ import com.invmanage.springapp.repository.InventoryItemRepository;
 public class InventoryController {
 
     private final InventoryItemRepository repository;
+    private final RestockRequestRepository restockRequestRepository;
 
-    public InventoryController(InventoryItemRepository repository) {
+    public InventoryController(InventoryItemRepository repository, RestockRequestRepository restockRequestRepository) {
         this.repository = repository;
+        this.restockRequestRepository = restockRequestRepository;
     }
+
+    // GET ALL INVENTORY ITEMS
 
     @GetMapping
     public List<InventoryItem> getAllItems() {
@@ -85,6 +91,14 @@ public class InventoryController {
         item.setQuantity(item.getQuantity() + quantityToAdd);
 
         InventoryItem updated = repository.save(item);
+
+        // ✅ Automatically approve pending restock requests for this item
+        List<RestockRequest> pendingRequests = restockRequestRepository.findByItemIdAndStatus(id, RestockRequest.Status.PENDING);
+        pendingRequests.forEach(req -> {
+            req.setStatus(RestockRequest.Status.APPROVED);
+            restockRequestRepository.save(req);
+        });
+
         return ResponseEntity.ok(updated);
     }
 }
